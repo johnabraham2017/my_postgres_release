@@ -1,0 +1,16 @@
+---
+packages:
+- name: my-pg-pkg
+  version: 546efabddf2e49e70747ce2d943528145476ca0d
+  fingerprint: 546efabddf2e49e70747ce2d943528145476ca0d
+  sha1: 9976e4d6d0f25c9a1f2372b5f4ac77f00ea6bdba
+  dependencies: []
+jobs:
+- name: my-pg-server
+  version: b06f548241032b45f63530108bb57a5921752251
+  fingerprint: b06f548241032b45f63530108bb57a5921752251
+  sha1: 4a5498717e60e9697ad91a69162fef6d77e07860
+commit_hash: '00000000'
+uncommitted_changes: false
+name: my-postgres
+version: 0+dev.2

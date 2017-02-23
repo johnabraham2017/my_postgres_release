@@ -1,0 +1,7 @@
+---
+name: my-pg-server
+templates:
+  pgsql_ctl.erb: bin/pgsql_ctl
+
+packages:
+  - my-pg-pkg

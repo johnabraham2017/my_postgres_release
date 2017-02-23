@@ -1,0 +1,67 @@
+compilation:
+  cloud_properties: {}
+  network: my-pg-server_network
+  reuse_compilation_vms: true
+  workers: 4
+director_uuid: <%= `bosh target > /dev/null 2>&1 && bosh status --uuid` %>
+iaas_settings:
+  compilation_cloud_properties: {}
+  resource_pool_cloud_properties:
+  - cloud_properties: {}
+    name: my-pg-server_z1
+  - cloud_properties: {}
+    name: errands_z1
+  stemcell:
+    name: bosh-warden-boshlite-ubuntu-trusty-go_agent
+    version: latest
+  subnet_configs:
+  - name: my-pg-server_z1
+    subnets:
+    - cloud_properties:
+        name: random
+      range: 10.244.15.0/24
+      reserved:
+      - 10.244.15.1
+      static:
+      - 10.244.15.2 - 10.244.15.20
+  watch_time: 10000-120000
+jobs:
+- instances: 1
+  name: my-pg-server
+  networks:
+  - name: my-pg-server_network
+  resource_pool: my-pg-server-resource-pool
+  templates:
+  - name: my-pg-server
+meta:
+  director_uuid: <%= `bosh target > /dev/null 2>&1 && bosh status --uuid` %>
+name: my-pg-server-warden
+networks:
+- name: my-pg-server_network
+  subnets:
+  - cloud_properties:
+      name: random
+    range: 10.244.15.0/24
+    reserved:
+    - 10.244.15.1
+    static:
+    - 10.244.15.2 - 10.244.15.20
+  type: manual
+properties:
+  host: 10.244.15.3
+releases:
+- name: my-postgres
+  version: latest
+resource_pools:
+- cloud_properties: {}
+  name: my-pg-server-resource-pool
+  network: my-pg-server_network
+  stemcell:
+    name: bosh-warden-boshlite-ubuntu-trusty-go_agent
+    version: latest
+update:
+  canaries: 1
+  canary_watch_time: 10000-120000
+  max_in_flight: 1
+  serial: true
+  update_watch_time: 10000-120000
